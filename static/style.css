@@ -6,6 +6,14 @@ body {
     padding: 0;
 }
 
+#navbar {
+    background-color: whitesmoke;
+    width: 100%;
+    height: min-content;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+}
+
 #content {
     background-color: white;
     width: 80%;
