@@ -1,9 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Error:404</title>
-</head>
-<body>
-    <h1>Error 404: Page not found</h1>
-</body>
-</html>
+{% extends "base.html.jinja" %}
+{% block title %}Error{% endblock %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+        .important { color: #336699; }
+    </style>
+{% endblock %}
+{% block content %}
+    <h1>Error 404</h1>
+    <p class="important">
+      Page not found.
+    </p>
+{% endblock %}
