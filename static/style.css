@@ -12,11 +12,52 @@ body {
     height: min-content;
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    box-sizing: border-box;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#navbar h1 {
+    font-size: clamp(1.2rem, 4vw, 3rem);
+    margin: 0;
+}
+
+#searchbar {
+    width: fit-content;
+    height: max-content;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 3px;
+
+}
+
+#searchbar input[type="text"] {
+    padding: 12px 16px; 
+    
+    font-size: clamp(0.8rem, 1.5vw, 1.2rem);  
+    
+    width: clamp(130px, 25vw, 400px);       
+    
+    border: 1px solid #cccccc;
+    border-radius: 4px; 
+}
+
+#searchbar button {
+    padding: 12px 20px; 
+    
+    font-size: clamp(0.9rem, 1.5vw, 1.2rem);  
+    
+    cursor: pointer;    
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    background-color: #e0e0e0; 
 }
 
 #content {
     background-color: white;
-    width: 80%;
+    width: 90%;
     margin: 20px auto; 
     padding: 20px;
     border-radius: 8px;

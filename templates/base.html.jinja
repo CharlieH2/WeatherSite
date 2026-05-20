@@ -3,16 +3,34 @@
 <head>
     {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-    <title>{% block title %}{% endblock %} - Weathersite</title>
-    {% endblock %}
+    <title>{% block title %}{% endblock title %} - Weathersite</title>
+    {% endblock head %}
 </head>
 <body>
-    <div id="navbar">{% block navbar %}{% endblock %}</div>
-    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="navbar">
+        
+        {% block navbar %}
+        {% endblock navbar %}
+        
+        <div id="searchbar">
+            {% block searchbar %}
+                    <form>
+                        <input type="text" placeholder="Search a location">
+                        <button type="submit">Search</button>
+                    </form>
+            {% endblock searchbar %}
+        </div>
+        
+    </div>
+
+    <div id="content">
+        {% block content %}{% endblock content %}
+    </div>
+
     <div id="footer">
         {% block footer %}
         &copy; Copyright 2026 by <a href="http://weathersite">Weathersite</a>.
-        {% endblock %}
+        {% endblock footer %}
     </div>
 </body>
 </html>
