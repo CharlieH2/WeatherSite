@@ -13,46 +13,48 @@
 {% block content %}
     <div class="weather-dashboard">
         
-        <section class="current-weather">
-            <h2 id="location-name">{{ location_name | default('London') }}</h2>
-            <div class="current-temp">
-                <span class="temp">{{ current.temperature | default('--') }}&deg;C</span>
-                <span class="condition">{{ current.condition | default('Clear') }}</span>
-            </div>
-            <div class="current-details">
-                <p>Wind: {{ current.wind_speed | default('--') }} mph</p>
-                <p>Humidity: {{ current.humidity | default('--') }}%</p>
-            </div>
-        </section>
+    <section class="current-weather">
+        <h2 id="location-name">{{ location_name | default('London') }}</h2>
+        <div class="current-temp">
+            <span class="temp">{{ current.temperature | default('--') }}&deg;C</span>
+            <span class="condition">{{ current.condition | default('--') }}</span>
+        </div>
+    </section>
 
-        <section class="hourly-forecast">
-            <h3>Hourly Forecast</h3>
-            <div class="hourly-scroll">
-                {% for hour in hourly_data %}
-                <div class="hour-card">
-                    <p class="time">{{ hour.time }}</p>
-                    <p class="icon">🌤️</p> <p class="temp">{{ hour.temperature }}&deg;C</p>
-                </div>
-                {% else %}
-                <p>Hourly data unavailable.</p>
-                {% endfor %}
+    <section class="hourly-forecast">
+        <h3>Hourly Forecast</h3>
+        <div class="hourly-scroll">
+            {% for hour in hourly_data %}
+            <div class="hour-card">
+                <p class="time">{{ hour.time }}</p>
+                <p class="condition-text">{{ hour.condition }}</p>
+                <p class="temp">{{ hour.temperature }}&deg;C <br><small>(Feels: {{ hour.feels_like }}&deg;)</small></p>
+                <p class="small-stat">Precip: {{ hour.precip_prob }}%</p>
+                <p class="small-stat">Wind: {{ hour.wind_speed }} mph</p>
+                <p class="small-stat">Humid: {{ hour.humidity }}%</p>
             </div>
-        </section>
+            {% else %}
+            <p>Hourly data unavailable.</p>
+            {% endfor %}
+        </div>
+    </section>
 
-        <section class="daily-forecast">
-            <h3>7-Day Forecast</h3>
-            <div class="daily-list">
-                {% for day in daily_data %}
-                <div class="day-row">
-                    <span class="day-name">{{ day.date }}</span>
-                    <span class="day-icon">🌧️</span>
-                    <span class="day-temps">H: {{ day.max_temp }}&deg; L: {{ day.min_temp }}&deg;</span>
-                </div>
-                {% else %}
-                <p>Daily data unavailable.</p>
-                {% endfor %}
+    <section class="daily-forecast">
+        <h3>7-Day Forecast</h3>
+        <div class="daily-list">
+            {% for day in daily_data %}
+            <div class="day-row">
+                <span class="day-name">{{ day.date }}</span>
+                <span class="day-condition">{{ day.condition }}</span>
+                <span class="day-sun">Sunrise: {{ day.sunrise }} | Sunset: {{ day.sunset }}</span>
+                <span class="day-uv">UV: {{ day.uv_index }}</span>
+                <span class="day-temps">H: {{ day.max_temp }}&deg; L: {{ day.min_temp }}&deg;</span>
             </div>
-        </section>
+            {% else %}
+            <p>Daily data unavailable.</p>
+            {% endfor %}
+        </div>
+    </section>
 
-    </div>
+</div>
 {% endblock %}

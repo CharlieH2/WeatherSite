@@ -1,3 +1,4 @@
+/* Base */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
@@ -6,6 +7,16 @@ body {
     padding: 0;
 }
 
+#content {
+    background-color: white;
+    width: 90%;
+    margin: 20px auto; 
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+}
+
+/*Nav & Search bar */
 #navbar {
     background-color: whitesmoke;
     width: 100%;
@@ -30,42 +41,28 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     padding: 3px;
-
 }
 
 #searchbar input[type="text"] {
     padding: 12px 16px; 
-    
     font-size: clamp(0.8rem, 1.5vw, 1.2rem);  
-    
     width: clamp(130px, 25vw, 400px);       
-    
     border: 1px solid #cccccc;
     border-radius: 4px; 
 }
 
 #searchbar button {
     padding: 12px 20px; 
-    
     font-size: clamp(0.9rem, 1.5vw, 1.2rem);  
-    
     cursor: pointer;    
     border: 1px solid #cccccc;
     border-radius: 4px;
     background-color: #e0e0e0; 
 }
 
-#content {
-    background-color: white;
-    width: 90%;
-    margin: 20px auto; 
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
-}
-
+/* Footer */
 #footer {
-    text-align: centre;
+    text-align: center; 
     padding: 20px;
     font-size: 0.9em;
     color: #666666;
@@ -80,7 +77,7 @@ body {
     text-decoration: underline;
 }
 
-/* --- Weather Dashboard Layout --- */
+/* Weather Dashboard */
 .weather-dashboard {
     display: flex;
     flex-direction: column;
@@ -91,7 +88,7 @@ body {
 .current-weather {
     text-align: center; 
     padding: 30px;
-    background-color: #f0f4f8; /* A subtle blue-grey to differentiate from the background */
+    background-color: #f0f4f8; 
     border-radius: 8px;
     border: 1px solid #e0e0e0;
 }
@@ -99,7 +96,10 @@ body {
 .current-weather h2 {
     margin-top: 0;
     color: #333333;
-    font-size: 2rem;
+    font-size: clamp(1.2rem, 4vw, 2rem);
+    overflow-wrap: break-word; 
+    word-break: break-word;    
+    line-height: 1.3;
 }
 
 .current-temp {
@@ -113,15 +113,13 @@ body {
     color: #0056b3;
 }
 
-.current-details {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
+.current-temp .condition {
+    font-size: 1.2rem;
     color: #666666;
-    font-size: 1.1rem;
+    font-weight: bold;
 }
 
-/* Hourly & Daily Section Headings */
+/* Section Headings */
 .hourly-forecast h3, .daily-forecast h3 {
     margin-top: 0;
     margin-bottom: 15px;
@@ -130,16 +128,16 @@ body {
     padding-bottom: 5px;
 }
 
-/* Hourly Forecast (Horizontal Scroll) */
+/* Hourly Forecast */
 .hourly-scroll {
     display: flex;
     overflow-x: auto;
     gap: 15px;
-    padding-bottom: 10px; /* Space for the scrollbar */
+    padding-bottom: 10px; 
 }
 
 .hour-card {
-    min-width: 90px;
+    min-width: 140px; 
     background-color: whitesmoke;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
@@ -156,7 +154,25 @@ body {
     color: #666666;
 }
 
-/* Daily Forecast (Vertical List) */
+.hour-card .temp {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.hour-card .condition-text {
+    font-size: 0.9rem;
+    color: #0056b3;
+    font-weight: bold;
+    min-height: 2.5em; 
+}
+
+.hour-card .small-stat {
+    font-size: 0.8rem;
+    color: #666666;
+    margin: 2px 0;
+}
+
+/* Daily Forecast */
 .daily-list {
     display: flex;
     flex-direction: column;
@@ -164,9 +180,10 @@ body {
 }
 
 .day-row {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 2fr 1fr 1fr; 
     align-items: center;
+    gap: 10px;
     background-color: whitesmoke;
     padding: 15px 20px;
     border-radius: 8px;
@@ -174,16 +191,86 @@ body {
 }
 
 .day-row span {
-    flex: 1;
-}
-
-.day-row .day-icon {
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 0.9rem;
 }
 
-.day-row .day-temps {
-    text-align: right;
+.day-row .day-name { 
+    text-align: left; 
     font-weight: bold;
-    color: #555555;
+    font-size: 1rem;
+}
+
+.day-row .day-condition {
+    color: #0056b3;
+    font-weight: bold;
+}
+
+.day-row .day-temps { 
+    text-align: right; 
+    font-weight: bold; 
+    color: #333333;
+}
+
+/* Dynamic Sizing (smaller displays) */
+@media (max-width: 768px) {
+    
+    #navbar {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    #searchbar form {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    #searchbar input[type="text"] {
+        width: 60vw;
+    }
+
+    #content {
+        width: 95%;
+        padding: 15px;
+        margin: 10px auto;
+    }
+
+    .current-temp .temp {
+        font-size: 3rem;
+    }
+
+    .current-details {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .day-row {
+        grid-template-columns: 1fr 1fr; 
+        gap: 12px;
+        padding: 15px;
+    }
+
+    .day-row .day-name {
+        grid-column: 1 / -1; 
+        text-align: center;
+        border-bottom: 1px solid #cccccc;
+        padding-bottom: 8px;
+        font-size: 1.1rem;
+    }
+
+    .day-row span {
+        text-align: center;
+    }
+
+    .day-row .day-sun {
+        grid-column: 1 / -1;
+        font-size: 0.85rem;
+        color: #555555;
+    }
+    
+    .day-row .day-temps {
+        text-align: center;
+    }
 }
