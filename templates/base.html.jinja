@@ -14,8 +14,8 @@
         
         <div id="searchbar">
             {% block searchbar %}
-                    <form>
-                        <input type="text" placeholder="Search a location">
+                    <form action="{{ url_for('search') }}" method="GET">
+                        <input type="text" name="q" placeholder="Search a location" required>
                         <button type="submit">Search</button>
                     </form>
             {% endblock searchbar %}

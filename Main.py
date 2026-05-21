@@ -1,6 +1,6 @@
 import os
-from flask import Flask
-from flask import render_template
+from flask import Flask, render_template, request, redirect, url_for
+from api_helpers import get_coordinates, get_weather_data # Import your new functions
 
 app = Flask(__name__)
 
@@ -12,13 +12,23 @@ def home():
 def page_not_found(error):
     return render_template('page_not_found.html.jinja'), 404
 
-@app.route('/weather')
-def weather():
-    # Pass empty lists and dictionaries to satisfy the template
+@app.route('/search')
+def search():
+    query = request.args.get('q')
+    if not query:
+        return redirect(url_for('home'))
+        
+    location_info = get_coordinates(query)
+    
+    if not location_info:
+        return "Location not found", 404
+        
+    weather_info = get_weather_data(location_info['latitude'], location_info['longitude'])
+    
     return render_template(
         'weather.html.jinja',
-        location_name='Preview City',
-        current={},       # Empty dictionary for current weather
-        hourly_data=[],   # Empty list for the hourly loop
-        daily_data=[]     # Empty list for the daily loop
+        location_name=location_info['address'],
+        current=weather_info['current'],
+        hourly_data=weather_info['hourly'],
+        daily_data=weather_info['daily']
     )
