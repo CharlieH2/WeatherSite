@@ -79,3 +79,111 @@ body {
 #footer a:hover {
     text-decoration: underline;
 }
+
+/* --- Weather Dashboard Layout --- */
+.weather-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Current Weather */
+.current-weather {
+    text-align: center; 
+    padding: 30px;
+    background-color: #f0f4f8; /* A subtle blue-grey to differentiate from the background */
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.current-weather h2 {
+    margin-top: 0;
+    color: #333333;
+    font-size: 2rem;
+}
+
+.current-temp {
+    margin: 15px 0;
+}
+
+.current-temp .temp {
+    font-size: 4rem;
+    font-weight: bold;
+    display: block;
+    color: #0056b3;
+}
+
+.current-details {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    color: #666666;
+    font-size: 1.1rem;
+}
+
+/* Hourly & Daily Section Headings */
+.hourly-forecast h3, .daily-forecast h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333333;
+    border-bottom: 2px solid whitesmoke;
+    padding-bottom: 5px;
+}
+
+/* Hourly Forecast (Horizontal Scroll) */
+.hourly-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding-bottom: 10px; /* Space for the scrollbar */
+}
+
+.hour-card {
+    min-width: 90px;
+    background-color: whitesmoke;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px 10px;
+    text-align: center;
+}
+
+.hour-card p {
+    margin: 5px 0;
+}
+
+.hour-card .time {
+    font-weight: bold;
+    color: #666666;
+}
+
+/* Daily Forecast (Vertical List) */
+.daily-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.day-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: whitesmoke;
+    padding: 15px 20px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.day-row span {
+    flex: 1;
+}
+
+.day-row .day-icon {
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.day-row .day-temps {
+    text-align: right;
+    font-weight: bold;
+    color: #555555;
+}
