@@ -35,13 +35,12 @@ def get_weather_data(lat, lon):
     openmeteo = openmeteo_requests.Client(session=retry_session)
 
     url = "https://api.open-meteo.com/v1/forecast"
-    # Your exact parameters
     params = {
         "latitude": lat,
         "longitude": lon,
         "daily": ["temperature_2m_max", "temperature_2m_min", "sunrise", "sunset", "uv_index_max", "weather_code"],
         "hourly": ["temperature_2m", "apparent_temperature", "relative_humidity_2m", "precipitation_probability", "wind_speed_10m", "weather_code"],
-        "current": ["temperature_2m", "weather_code"],
+        "current": ["temperature_2m", "weather_code", "relative_humidity_2m", "apparent_temperature", "wind_speed_10m"],
         "timezone": "GMT",
         "wind_speed_unit": "mph",
     }
@@ -49,14 +48,6 @@ def get_weather_data(lat, lon):
     responses = openmeteo.weather_api(url, params=params)
     response = responses[0]
     
-    # Process Current Data
-    current = response.Current()
-    current_data = {
-        "temperature": round(current.Variables(0).Value()),
-        "condition": get_condition_from_code(current.Variables(1).Value())
-    }
-
-    # Process Hourly Data
     hourly = response.Hourly()
     hourly_temp = hourly.Variables(0).ValuesAsNumpy()
     hourly_app_temp = hourly.Variables(1).ValuesAsNumpy()
@@ -84,7 +75,6 @@ def get_weather_data(lat, lon):
             "condition": get_condition_from_code(hourly_code[i])
         })
 
-    # Process Daily Data
     daily = response.Daily()
     daily_temp_max = daily.Variables(0).ValuesAsNumpy()
     daily_temp_min = daily.Variables(1).ValuesAsNumpy()
@@ -102,7 +92,6 @@ def get_weather_data(lat, lon):
     
     daily_data_list = []
     for i in range(1, len(daily_dates)): 
-        # Convert UNIX timestamps to readable H:M format
         sunrise_time = pd.to_datetime(daily_sunrise[i], unit="s").strftime("%H:%M")
         sunset_time = pd.to_datetime(daily_sunset[i], unit="s").strftime("%H:%M")
         
@@ -115,6 +104,18 @@ def get_weather_data(lat, lon):
             "uv_index": round(daily_uv[i], 1),
             "condition": get_condition_from_code(daily_code[i])
         })
+
+    current = response.Current()
+    current_data = {
+        "temperature": round(current.Variables(0).Value()),
+        "condition": get_condition_from_code(current.Variables(1).Value()),
+        "humidity": round(current.Variables(2).Value()),
+        "feels_like": round(current.Variables(3).Value()),
+        "wind_speed": round(current.Variables(4).Value()),
+        "high_temp": round(daily_temp_max[0]),
+        "low_temp": round(daily_temp_min[0]),
+        "uv_index": round(daily_uv[0], 1)
+    }
 
     return {
         "current": current_data,

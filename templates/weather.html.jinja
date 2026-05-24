@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block navbar %}
-    <h1>Weathersite</h1>
+    <h1><a href="{{ url_for('home') }}">Weathersite</a></h1>
 {% endblock %}
 {% block content %}
     <div class="weather-dashboard">
@@ -18,6 +18,14 @@
         <div class="current-temp">
             <span class="temp">{{ current.temperature | default('--') }}&deg;C</span>
             <span class="condition">{{ current.condition | default('--') }}</span>
+        </div>
+        
+        <div class="current-details">
+            <div class="detail-box">H: {{ current.high_temp }}&deg; | L: {{ current.low_temp }}&deg;</div>
+            <div class="detail-box">Feels Like: {{ current.feels_like }}&deg;C</div>
+            <div class="detail-box">Wind: {{ current.wind_speed }} mph</div>
+            <div class="detail-box">Humidity: {{ current.humidity }}%</div>
+            <div class="detail-box">UV Index: {{ current.uv_index }}</div>
         </div>
     </section>
 
