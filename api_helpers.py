@@ -63,16 +63,22 @@ def get_weather_data(lat, lon):
         inclusive="left"
     )
     
+    current_gmt_hour = pd.Timestamp.now(tz="GMT").strftime("%H:00")
+    
     hourly_data_list = []
     for i in range(24): 
+        hour_string = hourly_dates[i].strftime("%H:00")
+        
         hourly_data_list.append({
-            "time": hourly_dates[i].strftime("%H:00"), 
+            "time": hour_string, 
+            "is_current": hour_string == current_gmt_hour,
             "temperature": round(hourly_temp[i]),
             "feels_like": round(hourly_app_temp[i]),
             "humidity": round(hourly_hum[i]),
             "precip_prob": round(hourly_precip[i]),
             "wind_speed": round(hourly_wind[i]),
-            "condition": get_condition_from_code(hourly_code[i])
+            "condition": get_condition_from_code(hourly_code[i]),
+            "color_class": get_color_class(hourly_code[i]) 
         })
 
     daily = response.Daily()
@@ -102,14 +108,17 @@ def get_weather_data(lat, lon):
             "sunrise": sunrise_time,
             "sunset": sunset_time,
             "uv_index": round(daily_uv[i], 1),
-            "condition": get_condition_from_code(daily_code[i])
+            "condition": get_condition_from_code(daily_code[i]),
+            "color_class": get_color_class(daily_code[i])
         })
 
     current = response.Current()
+    current_weather_code = current.Variables(1).Value()
     current_data = {
         "temperature": round(current.Variables(0).Value()),
         "condition": get_condition_from_code(current.Variables(1).Value()),
         "humidity": round(current.Variables(2).Value()),
+        "color_class": get_color_class(current_weather_code),
         "feels_like": round(current.Variables(3).Value()),
         "wind_speed": round(current.Variables(4).Value()),
         "high_temp": round(daily_temp_max[0]),
@@ -139,3 +148,26 @@ def get_condition_from_code(code):
         99: "Thunderstorm with heavy hail"
     }
     return weather_codes.get(code, "Unknown")
+
+def get_color_class(code):
+    """Maps WMO weather codes to CSS colour classes."""
+    if code == 0: 
+        return "color-clear"            # Warm colours
+    elif code in [1, 2]: 
+        return "color-cloudy"           # Grey
+    elif code == 3: 
+        return "color-overcast"         # Dark grey
+    elif code in [45, 48]: 
+        return "color-fog"              # Light grey
+    elif code in [51, 53, 55, 56, 57]: 
+        return "color-drizzle"          # Light blue
+    elif code in [61, 63, 66, 80, 81]: 
+        return "color-rain"             # Medium blue
+    elif code in [65, 67, 82]: 
+        return "color-heavy-rain"       # Dark blue
+    elif code in [71, 73, 75, 77, 85, 86]: 
+        return "color-snow"             # White 
+    elif code in [95, 96, 99]: 
+        return "color-thunder"          # Black
+    
+    return "color-default"              # Fallback

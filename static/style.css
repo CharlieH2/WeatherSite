@@ -201,6 +201,18 @@ body {
     margin: 2px 0;
 }
 
+.hour-card.current-hour {
+    background-color: #dbeafe;
+    border: 2px solid #0056b3;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.hour-card.current-hour .time {
+    color: #0056b3;
+    font-size: 1.1rem;
+}
+
 /* Daily Forecast */
 .daily-list {
     display: flex;
@@ -302,4 +314,47 @@ body {
     .day-row .day-temps {
         text-align: center;
     }
+}
+
+/* Weather Condition Text Colours */
+.color-clear { 
+    color: #d97706 !important;
+} 
+
+.color-cloudy { 
+    color: #6b7280 !important;
+} 
+
+.color-overcast { 
+    color: #374151 !important;
+} 
+
+.color-fog { 
+    color: #9ca3af !important;
+} 
+
+.color-drizzle { 
+    color: #60a5fa !important;
+} 
+
+.color-rain { 
+    color: #2563eb !important;
+} 
+
+.color-heavy-rain { 
+    color: #1e3a8a !important;
+    font-weight: 900;          
+} 
+
+.color-snow { 
+    color: #ffffff !important;
+    background-color: #94a3b8;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+} 
+
+.color-thunder { 
+    color: #000000 !important;
+    font-weight: 900; 
 }
